@@ -32,10 +32,15 @@ SYSTEM76_CONFIG = {
     'format': 'hex@RRGGBB'
 }
 
+class KeyboardError(Exception):
+    
+
 class kind(Enum):
     RGB = (1, 'rgb')
     LIST = (2, 'list')
     NOCOLOR = (3, 'nocolor')
+
+
 
 class Keyboard:
     def __init__(self, path='/dev/null'):
@@ -57,3 +62,4 @@ class Keyboard:
     def kind(self, kb_kind)
         try:
             self._store['kind'] = kind[kb_kind]
+        except KeyError:
