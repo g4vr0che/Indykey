@@ -72,6 +72,7 @@ class Keyboard:
         try:
             return self._store['kind']
         except KeyError:
+
             return None
     
     @kind.setter
@@ -97,13 +98,26 @@ class Keyboard:
         try:
             return self._store['brightness']
         except KeyError:
-            return True
+            return None
         
     @brightness.setter
     def brightness(self, bright):
+        """ We make sure the value is a bool."""
         if isinstance(bright, bool):
             self._store['brightness'] = bright
         else:
             raise KeyboardError(
                 'Keyboard brightness value must be a boolean value.'
             )
+    
+    @property
+    def zones(self):
+        """int: The number of zones this keyboard supports."""
+        try:
+            return self._store['zones']
+        except KeyError:
+            return None
+    
+    @zones.setter
+    def zones(self, zonenum):
+        self._store['zones'] = zonenum
