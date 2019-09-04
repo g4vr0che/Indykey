@@ -75,3 +75,18 @@ class Keyboard:
                 f'{valid_types}'
             )
     
+    @property
+    def brightness(self):
+        try:
+            return self._store['brightness']
+        except KeyError:
+            return True
+        
+    @brightness.setter
+    def brightness(self, bright):
+        if isinstance(bright, bool):
+            self._store['brightness'] = bright
+        else:
+            raise KeyboardError(
+                'Keyboard brightness value must be a boolean value.'
+            )
