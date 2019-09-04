@@ -33,33 +33,45 @@ SYSTEM76_CONFIG = {
 }
 
 class KeyboardError(Exception):
-    
+    """An error from the Keyboard.
 
-class kind(Enum):
+    Arguments: 
+        msg (str): message describing the error
+        code (:obj:`int`, optional, default=1): Exception error code.
+    """
+    def __init__(self, msg, code=1):
+        self.msg = msg
+        self.code = code
+
+class typ(Enum):
     RGB = (1, 'rgb')
     LIST = (2, 'list')
     NOCOLOR = (3, 'nocolor')
-
+    ONECOLOR = (4, 'onecolor')
 
 
 class Keyboard:
     def __init__(self, path='/dev/null'):
 
-        self.kind = kind.RGB
-        self.brightness = True
-        self.zones = 3
-        self.format: 'hex@RRGGBB'
         self._store = {}
 
     @property
     def kind(self):
         try:
-            return self._store['type']
+            return self._store['kind']
         except KeyError:
             return None
     
     @kind.setter
-    def kind(self, kb_kind)
+    def kind(self, kb_kind):
         try:
-            self._store['kind'] = kind[kb_kind]
+            self._store['kind'] = typ[kb_kind.upper()]
         except KeyError:
+            valid_types = ""
+            for t in typ:
+                valid_types += f'{t.value[1]}\n'
+            raise KeyboardError(
+                f'We got the wrong type of error. Valid types are:\n'
+                f'{valid_types}'
+            )
+    
