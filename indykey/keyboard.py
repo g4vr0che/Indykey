@@ -121,3 +121,15 @@ class Keyboard:
     @zones.setter
     def zones(self, zonenum):
         self._store['zones'] = zonenum
+
+    @property
+    def color_format(self):
+        """str: A description of the format accepted for colour values."""
+        try:
+            return self._store['color_format']
+        except KeyError:
+            return None
+    
+    @color_format.setter
+    def color_format(self, form):
+        self._store['color_format'] = form
