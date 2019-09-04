@@ -44,19 +44,31 @@ class KeyboardError(Exception):
         self.code = code
 
 class typ(Enum):
+    """ Defines the colour-changing capabilities of this keyboard. 
+    Valid options are:
+        rgb - Supports full RGB control.
+        list - Supports picking from a list of colours.
+        nocolor - Does not support any color changing (may support brightness)
+    """
     RGB = (1, 'rgb')
     LIST = (2, 'list')
     NOCOLOR = (3, 'nocolor')
-    ONECOLOR = (4, 'onecolor')
-
 
 class Keyboard:
     def __init__(self, path='/dev/null'):
-
+        """ A class that represents the capabilities of the keyboard and defines
+        how to set colors on it.
+        """
         self._store = {}
 
     @property
     def kind(self):
+        """:obj:`typ Enum': Describe the color capabilities of the keyboard.
+        Valid options are:
+            rgb - Supports full RGB control.
+            list - Supports picking from a list of colours.
+            nocolor - Does not support any color changing (but may support brightness)
+        """
         try:
             return self._store['kind']
         except KeyError:
@@ -64,6 +76,10 @@ class Keyboard:
     
     @kind.setter
     def kind(self, kb_kind):
+        """ We can accept a string, 'rgb', 'list', or 'nocolor' and turn it into
+        the enum.
+        """
+
         try:
             self._store['kind'] = typ[kb_kind.upper()]
         except KeyError:
@@ -77,6 +93,7 @@ class Keyboard:
     
     @property
     def brightness(self):
+        """bool: Whether the keyboard supports brightness control."""
         try:
             return self._store['brightness']
         except KeyError:
