@@ -22,38 +22,7 @@ THIS SOFTWARE.
  the values supported by the keyboard.
 """
 
-from enum import Enum
 import os
 
-SYSTEM76_CONFIG = {
-    'type': 'rgb',
-    'brightness': True,
-    'zones': 3,
-    'format': 'hex@RRGGBB'
-}
-
-class kind(Enum):
-    RGB = (1, 'rgb')
-    LIST = (2, 'list')
-    NOCOLOR = (3, 'nocolor')
-
 class Keyboard:
-    def __init__(self, path='/dev/null'):
-
-        self.kind = kind.RGB
-        self.brightness = True
-        self.zones = 3
-        self.format: 'hex@RRGGBB'
-        self._store = {}
-
-    @property
-    def kind(self):
-        try:
-            return self._store['type']
-        except KeyError:
-            return None
-    
-    @kind.setter
-    def kind(self, kb_kind)
-        try:
-            self._store['kind'] = kind[kb_kind]
+    pass
