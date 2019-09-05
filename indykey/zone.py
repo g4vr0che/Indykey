@@ -20,8 +20,6 @@ THIS SOFTWARE.
 """
 
 import dbus
-import os
-import sys
 
 bus = dbus.SystemBus()
 remote_object = bus.get_object('com.github.g4vr0che.indykey', 'IndykeyObject')

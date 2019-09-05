@@ -22,7 +22,5 @@ THIS SOFTWARE.
  the values supported by the keyboard.
 """
 
-import os
-
 class Keyboard:
     pass
