@@ -19,7 +19,12 @@ TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 THIS SOFTWARE.
 """
 
+import dbus
 import os
+import sys
+
+bus = dbus.SystemBus()
+remote_object = bus.get_object('com.github.g4vr0che.indykey', 'IndykeyObject')
 
 class Zone:
     def __init__(self, path):
@@ -32,3 +37,8 @@ class Zone:
             color = zone_file.readline().strip()
             
         return color
+    
+    @color.setter
+    def color(self, color):
+        """We talk to our dbus object to set the color using polkit."""
+        remote_object.SetColor(self.path, color)
