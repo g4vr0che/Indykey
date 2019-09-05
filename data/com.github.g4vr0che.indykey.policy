@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
+ <!-- To the extent possible under law, David D. Lowe has waived all 
+ copyright and related or neighboring rights to this file.
+ License: http://creativecommons.org/publicdomain/zero/1.0/ -->
+<policyconfig>
+
+  <vendor>Indykley</vendor>
+  <vendor_url>https://github.com/g4vr0che/Indykey</vendor_url>
+  <icon_name>preferences-other-symbolic</icon_name>
+
+  <action id="com.github.g4vr0che.indykey.setcolor">
+    <description>Sets a colour on a keyboard zone.</description>
+    <message>System policy prevents you from changing these colors.</message>
+    <defaults>
+      <allow_any>auth_admin_keep</allow_any>
+      <allow_inactive>auth_admin_keep</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+  </action>
+  
+</policyconfig> 
