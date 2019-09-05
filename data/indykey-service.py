@@ -18,6 +18,8 @@ OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
 TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 THIS SOFTWARE.
 """
+import gi
+from gi.repository import GObject
 
 import dbus
 import dbus.service
@@ -66,6 +68,7 @@ class IndykeyObject(dbus.service.Object):
                 zone_file.write(color)
         except FileNotFoundError:
             raise
+        return 0
     
     @classmethod
     def _log_in_file(klass, filename, string):
@@ -136,7 +139,10 @@ class IndykeyObject(dbus.service.Object):
 
 if __name__ == '__main__':
     dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
-    
+
     bus = dbus.SystemBus()
     name = dbus.service.BusName("com.github.g4vr0che.indykey", bus)
     object = IndykeyObject(bus, '/IndykeyObject')
+
+    mainloop = GObject.MainLoop()
+    mainloop.run()

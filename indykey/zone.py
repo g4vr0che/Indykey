@@ -22,7 +22,7 @@ THIS SOFTWARE.
 import dbus
 
 bus = dbus.SystemBus()
-remote_object = bus.get_object('com.github.g4vr0che.indykey', 'IndykeyObject')
+remote_object = bus.get_object('com.github.g4vr0che.indykey', '/IndykeyObject')
 
 class Zone:
     def __init__(self, path):

@@ -101,7 +101,7 @@ setup(
     url='https://github.com/g4vr0che/indykey',
     description='A tool to set keyboard backlight colors and brightness',
     download_url='https://github.com/g4vr0che/Indykey/releases',
-    test_require=['pytest', 'pyflakes'],
+    tests_require=['pytest', 'pyflakes'],
     license='BSD-2',
     packages=['indykey'],
     data_files=[
