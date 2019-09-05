@@ -20,5 +20,14 @@
       <allow_active>yes</allow_active>
     </defaults>
   </action>
+  <action id="com.github.g4vr0che.indykey.setbrightness">
+    <description>Sets a brightness on the keyboard.</description>
+    <message>System policy prevents you from changing these colors.</message>
+    <defaults>
+      <allow_any>yes</allow_any>
+      <allow_inactive>yes</allow_inactive>
+      <allow_active>yes</allow_active>
+    </defaults>
+  </action>
   
 </policyconfig> 

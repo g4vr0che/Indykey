@@ -70,6 +70,22 @@ class IndykeyObject(dbus.service.Object):
             raise
         return 0
     
+    @dbus.service.method(
+        'com.github.g4vr0che.Interface',
+        in_signature='si', out_signature='i',
+        sender_keyword='sender', connection_keyword='conn'
+    )
+    def SetBrightness(self, zone_path, color, sender=None, conn=None):
+        self._check_polkit_privilege(
+            sender, conn, 'com.github.g4vr0che.indykey.setbrightness'
+        )
+        try:
+            with open(zone_path, mode='w') as zone_file:
+                zone_file.write(str(color))
+        except FileNotFoundError:
+            raise
+        return 0
+    
     @classmethod
     def _log_in_file(klass, filename, string):
         date = time.asctime(time.localtime())
