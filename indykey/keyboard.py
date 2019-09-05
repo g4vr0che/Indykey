@@ -90,6 +90,29 @@ class Keyboard:
         rb = brt / 100 * self.max_brightness
         self.raw_brightness = int(rb)
     
+    @property
+    def color(self):
+        """ dict: The colors for all zones on the keyboard."""
+        zones = {}
+        for i in self.get_color_zones():
+            zone_file = f'color_{i}'
+            zone_path = os.path.join(self.path, zone_file)
+            zne = zone.Zone(zone_path)
+            zones[i] = zne.color
+        return zones
+    
+    @color.setter
+    def color(self, color):
+        """ Sets all zones to one colour. To set zones individually, use
+        `self.set_zone_color()`.
+        """
+        for i in self.get_color_zones():
+            zone_file = f'color_{i}'
+            zone_path = os.path.join(self.path, zone_file)
+            zne = zone.Zone(zone_path)
+            zne.color = color
+
+    
     def get_color_zones(self):
         """ Gets the colour zone names and returns them in a list."""
         zones = []
@@ -115,3 +138,12 @@ class Keyboard:
         zne = zone.Zone(zone_path)
         zne.color = color
         return zne.color
+    
+    def set_all_zones_color(self, color):
+        """ Sets all zones to `color`."""
+        for i in self.get_color_zones():
+            zone_file = f'color_{i}'
+            zone_path = os.path.join(self.path, zone_file)
+            zne = zone.Zone(zone_path)
+            zne.color = color
+        

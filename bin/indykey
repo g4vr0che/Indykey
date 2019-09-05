@@ -19,5 +19,5 @@ TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 THIS SOFTWARE.
 """
 
-from .keyboard import Keyboard
-from .zone import Zone
+import argparse
+
