@@ -24,6 +24,18 @@ import dbus
 bus = dbus.SystemBus()
 remote_object = bus.get_object('com.github.g4vr0che.indykey', '/IndykeyObject')
 
+class ZoneError(Exception):
+    """Exception when a color couldn't be set
+
+    Arguments: 
+        msg (str): Human-readable message describing the error that threw the 
+            exception.
+        code (:obj:`int`, optional, default=1): Exception error code.
+    """
+    def __init__(self, msg, code=1):
+        self.msg = msg
+        self.code = code
+
 class Zone:
     def __init__(self, path):
         self.path = path
@@ -39,4 +51,8 @@ class Zone:
     @color.setter
     def color(self, color):
         """We talk to our dbus object to set the color using polkit."""
-        remote_object.SetColor(self.path, color)
+        result = remote_object.SetColor(self.path, color)
+        if result != "good":
+            raise ZoneError(
+                f'Could not set color {color}: Invalid color!'
+            )

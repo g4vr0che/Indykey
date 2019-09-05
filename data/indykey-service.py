@@ -56,19 +56,22 @@ class IndykeyObject(dbus.service.Object):
 
     @dbus.service.method(
         'com.github.g4vr0che.Interface',
-        in_signature='ss', out_signature='i',
+        in_signature='ss', out_signature='s',
         sender_keyword='sender', connection_keyword='conn'
     )
     def SetColor(self, zone_path, color, sender=None, conn=None):
         self._check_polkit_privilege(
             sender, conn, 'com.github.g4vr0che.indykey.setcolor'
         )
+        with open(zone_path) as zone_file:
+            current_color = zone_file.read()
         try:
             with open(zone_path, mode='w') as zone_file:
                 zone_file.write(color)
-        except FileNotFoundError:
-            raise
-        return 0
+        except OSError:
+            zone_file.write(current_color)
+            return color
+        return 'good'
     
     @dbus.service.method(
         'com.github.g4vr0che.Interface',

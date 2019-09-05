@@ -89,3 +89,29 @@ class Keyboard:
         """
         rb = brt / 100 * self.max_brightness
         self.raw_brightness = int(rb)
+    
+    def get_color_zones(self):
+        """ Gets the colour zone names and returns them in a list."""
+        zones = []
+        drv_dir = os.listdir(self.path)
+        
+        for item in drv_dir:
+            if item.startswith('color_'):
+                zones.append(item.split('_')[1])
+        
+        return zones
+    
+    def get_zone_color(self, zonename):
+        """ Gets the current colour value of a zone."""
+        zone_file = f'color_{zonename}'
+        zone_path = os.path.join(self.path, zone_file)
+        zne = zone.Zone(zone_path)
+        return zne.color
+
+    def set_zone_color(self, zonename, color):
+        """ Sets the `zone` to `color`. """
+        zone_file = f'color_{zonename}'
+        zone_path = os.path.join(self.path, zone_file)
+        zne = zone.Zone(zone_path)
+        zne.color = color
+        return zne.color
