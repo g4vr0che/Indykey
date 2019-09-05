@@ -60,8 +60,8 @@ def run_pyflakes3():
     script = '/usr/bin/pyflakes3'
     names = [
         'setup.py',
-    ] + DIRS
-    args = [os.path.join(TREE, name) for name in names]
+    ] + TESTDIRS
+    args = [os.path.join(FILETREE, name) for name in names]
     return run_under_same_interpreter('flakes', script, args)
 
 class Test(Command):
