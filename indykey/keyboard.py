@@ -30,6 +30,14 @@ from . import zone
 bus = dbus.SystemBus()
 remote_object = bus.get_object('com.github.g4vr0che.indykey', '/IndykeyObject')
 
+""" We need to restrict access to certain paths for non-root users, because 
+otherwise we could allow accessing arbitrary files without authentication due 
+to our polkit settings. So we validate the path against a list of known-ok paths
+and refuse to operate on anything else unless the user is root."""
+VALID_PATHS = [
+    '/sys/class/leds/system76::kbd_backlight'
+]
+
 class KeyboardException(Exception):
     """Exception when something goes wrong with the keyboard
 
@@ -44,6 +52,10 @@ class KeyboardException(Exception):
 
 class Keyboard:
     def __init__(self, path):
+        if not path in VALID_PATHS and os.geteuid() != 0:
+            raise KeyboardException(
+                f'The path {path} is not in the valid paths or you are not root.'
+            )
         self.path = path
         self.brt_path = os.path.join(self.path, 'brightness')
         self.mb_path = os.path.join(self.path, 'max_brightness')
