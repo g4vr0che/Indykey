@@ -21,3 +21,85 @@ THIS SOFTWARE.
 
 import argparse
 
+import indykey
+
+def lst(args, keyboard):
+    """List subcommand.
+
+    Lists all available colour zones and current keyboard state.
+    """
+    print(f'Brightness: {keyboard.brightness}')
+    zones = keyboard.get_color_zones()
+    zone_colors = keyboard.color
+    for zone in zones:
+        print(f'{zone}: #{zone_colors[zone]}')
+
+def st(args, keyboard):
+    """Set subcommand.
+
+    Sets one or all colour zones to a given colour.
+    """
+    if not args.zone:
+        keyboard.color = args.color.strip('#')
+    else:
+        keyboard.set_zone_color(args.zone, args.color.strip('#'))
+
+
+def main(options=None):
+    """This is the main program function."""
+    parser = argparse.ArgumentParser(
+        description='Set colours for your keyboard.'
+    )
+
+    parser.add_argument(
+        '-b',
+        '--brightness',
+        type=int,
+        help='Set the keyboard brightness, out of 100%'
+    )
+
+    subparsers = parser.add_subparsers(
+        help='The command to run',
+        dest='action',
+        metavar='COMMAND'
+    )
+
+    parser_list = subparsers.add_parser(
+        'list',
+        help='List available color zones.'
+    )
+
+    parser_set = subparsers.add_parser(
+        'set',
+        help='Set a colour zone to the given colour.'
+    )
+    parser_set.add_argument(
+        'zone',
+        metavar='ZONE',
+        nargs='?',
+        help='The zone to set. Sets all colours if not specified.'
+    )
+    parser_set.add_argument(
+        'color',
+        metavar='RRGGBB',
+        help='The Hex value of the colour to set.'
+    )
+
+    args = parser.parse_args()
+
+    keyboard = indykey.Keyboard('/sys/class/leds/system76::kbd_backlight')
+
+    if args.brightness:
+        keyboard.brightness = args.brightness
+    
+    if not args.action: 
+        args.action = 'list'
+    
+    actions = {
+        'list': lst,
+        'set': st,
+    }
+    actions[args.action](args, keyboard)
+
+if __name__ == '__main__':
+    main()

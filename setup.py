@@ -112,5 +112,6 @@ setup(
     ],
     cmdclass={
         'test': Test,
-    }
+    },
+    scripts=['bin/indykey']
 )
